@@ -43,7 +43,7 @@ const PodcastDetails = ({params : {podcastId}}: {params: {podcastId: Id<'podcast
 
       <PodcastDetailPlayer
         isOwner={isOwner}
-        podcastid={podcast._id}
+        podcastId={podcast._id}
         {...podcast}
       />
 
