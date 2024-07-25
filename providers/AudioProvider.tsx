@@ -1,12 +1,12 @@
-'use client'
+'use client';
 
 import { AudioContextType, AudioProps } from "@/types";
 import { usePathname } from "next/navigation";
-import { Children, createContext, useContext, useEffect, useState } from "react"
+import React,  { createContext, useContext, useEffect, useState } from "react"
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
 
-const AudioProvider = ({Children}: {Children: React.ReactNode}) => {
+const AudioProvider = ({children }: {children : React.ReactNode}) => {
     const [audio, setAudio] = useState<AudioProps | undefined>()
     const pathname = usePathname();
     useEffect(() => {
@@ -15,7 +15,7 @@ const AudioProvider = ({Children}: {Children: React.ReactNode}) => {
 
     return (
         <AudioContext.Provider value={{ audio, setAudio }}>
-            {Children}
+            {children }
         </AudioContext.Provider>
     )
 }
