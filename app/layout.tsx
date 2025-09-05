@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import ConvexClerkProvider from "../providers/ConvexClerkProvider";
 import AudioProvider from "@/providers/AudioProvider";
 
-const manrope = Manrope({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+});
 
 export const metadata: Metadata = {
-  title: "Orbicast",
+  title: "Orbicast - the new gen of podcasts",
   description: "Listen to your podcasts and generate them with AI",
   icons: {
-    icon: '/icons/logo.svg'
-  }
+    icon: "/icons/logo.svg",
+  },
 };
 
 export default function RootLayout({
@@ -23,9 +26,7 @@ export default function RootLayout({
     <ConvexClerkProvider>
       <html lang="en">
         <AudioProvider>
-          <body className={`${manrope.className}`}>
-            {children}
-          </body>
+          <body className={`${inter.className}`}>{children}</body>
         </AudioProvider>
       </html>
     </ConvexClerkProvider>
