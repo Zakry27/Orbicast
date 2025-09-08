@@ -53,14 +53,14 @@ export const createUser = internalMutation({
     clerkId: v.string(),
     email: v.string(),
     imageUrl: v.string(),
-    name: v.string(),
+    name: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     await ctx.db.insert("users", {
       clerkId: args.clerkId,
       email: args.email,
       imageUrl: args.imageUrl,
-      name: args.name,
+      name: args.name ?? "Unnamed User",
     });
   },
 });
@@ -70,6 +70,7 @@ export const updateUser = internalMutation({
     clerkId: v.string(),
     imageUrl: v.string(),
     email: v.string(),
+    name: v.optional(v.string()), // optional now
   },
   async handler(ctx, args) {
     const user = await ctx.db
@@ -81,21 +82,24 @@ export const updateUser = internalMutation({
       throw new ConvexError("User not found");
     }
 
-    await ctx.db.patch(user._id, {
+    // Only update name if it exists
+    const patchData: Record<string, any> = {
       imageUrl: args.imageUrl,
       email: args.email,
-    });
+    };
+    if (args.name) patchData.name = args.name;
 
-    const podcast = await ctx.db
+    await ctx.db.patch(user._id, patchData);
+
+    // Update author's image on podcasts
+    const podcasts = await ctx.db
       .query("podcasts")
       .filter((q) => q.eq(q.field("authorId"), args.clerkId))
       .collect();
 
     await Promise.all(
-      podcast.map(async (p) => {
-        await ctx.db.patch(p._id, {
-          authorImageUrl: args.imageUrl,
-        });
+      podcasts.map(async (p) => {
+        await ctx.db.patch(p._id, { authorImageUrl: args.imageUrl });
       })
     );
   },

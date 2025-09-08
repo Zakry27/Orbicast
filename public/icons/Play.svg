@@ -1,11 +1,7 @@
-<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="48" height="48" rx="24" fill="url(#paint0_linear_3676_2393)"/>
-<path d="M29.49 21.6L17.6 28.77C16.9 29.19 16 28.69 16 27.87V19.87C16 16.38 19.77 14.2 22.8 15.94L27.39 18.58L29.48 19.78C30.17 20.19 30.18 21.19 29.49 21.6Z" fill="#121212"/>
-<path d="M30.0898 27.46L26.0398 29.8L21.9998 32.13C20.5498 32.96 18.9098 32.79 17.7198 31.95C17.1398 31.55 17.2098 30.66 17.8198 30.3L30.5298 22.68C31.1298 22.32 31.9198 22.66 32.0298 23.35C32.2798 24.9 31.6398 26.57 30.0898 27.46Z" fill="#121212"/>
-<defs>
-<linearGradient id="paint0_linear_3676_2393" x1="43.5" y1="7.49999" x2="-49.5" y2="110" gradientUnits="userSpaceOnUse">
-<stop stop-color="white"/>
-<stop offset="1" stop-color="white" stop-opacity="0"/>
-</linearGradient>
-</defs>
-</svg>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="SVGRepo_bgCarrier" stroke-width="0"/>
+<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="SVGRepo_iconCarrier"> <path opacity="0.4" d="M11.9707 22C17.4936 22 21.9707 17.5228 21.9707 12C21.9707 6.47715 17.4936 2 11.9707 2C6.44786 2 1.9707 6.47715 1.9707 12C1.9707 17.5228 6.44786 22 11.9707 22Z" fill="#d9d9d9"/> <path d="M14.9694 10.2301L12.0694 8.56012C11.3494 8.14012 10.4794 8.14012 9.75938 8.56012C9.03938 8.98012 8.60938 9.72012 8.60938 10.5601V13.9101C8.60938 14.7401 9.03938 15.4901 9.75938 15.9101C10.1194 16.1201 10.5194 16.2201 10.9094 16.2201C11.3094 16.2201 11.6994 16.1201 12.0594 15.9101L14.9594 14.2401C15.6794 13.8201 16.1094 13.0801 16.1094 12.2401C16.1294 11.4001 15.6994 10.6501 14.9694 10.2301Z" fill="#d9d9d9"/> </g>
+</svg>

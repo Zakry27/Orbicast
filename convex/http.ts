@@ -15,26 +15,38 @@ const handleClerkWebhook = httpAction(async (ctx, request) => {
     return new Response("Invalid request", { status: 400 });
   }
   switch (event.type) {
-    case "user.created":
+    case "user.created": {
+      const first = event.data.first_name ?? "";
+      const last = event.data.last_name ?? "";
+      const name =
+        (first + " " + last).trim() || event.data.username || event.data.id;
       await ctx.runMutation(internal.users.createUser, {
         clerkId: event.data.id,
         email: event.data.email_addresses[0].email_address,
         imageUrl: event.data.image_url,
-        name: event.data.first_name as string,
+        name,
       });
       break;
-    case "user.updated":
+    }
+    case "user.updated": {
+      const first = event.data.first_name ?? "";
+      const last = event.data.last_name ?? "";
+      const name =
+        (first + " " + last).trim() || event.data.username || event.data.id;
       await ctx.runMutation(internal.users.updateUser, {
         clerkId: event.data.id,
         imageUrl: event.data.image_url,
         email: event.data.email_addresses[0].email_address,
+        name,
       });
       break;
-    case "user.deleted":
+    }
+    case "user.deleted": {
       await ctx.runMutation(internal.users.deleteUser, {
         clerkId: event.data.id as string,
       });
       break;
+    }
   }
   return new Response(null, {
     status: 200,

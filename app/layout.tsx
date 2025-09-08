@@ -26,7 +26,7 @@ export default function RootLayout({
     <ConvexClerkProvider>
       <html lang="en">
         <AudioProvider>
-          <body className={`${inter.className}`}>{children}</body>
+          <body className={`${inter.className} antialiased`}>{children}</body>
         </AudioProvider>
       </html>
     </ConvexClerkProvider>
