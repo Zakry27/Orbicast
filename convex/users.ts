@@ -1,6 +1,6 @@
 import { ConvexError, v } from "convex/values";
 
-import { internalMutation, query } from "./_generated/server";
+import { internalMutation, mutation, query } from "./_generated/server";
 
 export const getUserById = query({
   args: { clerkId: v.string() },
@@ -10,11 +10,11 @@ export const getUserById = query({
       .filter((q) => q.eq(q.field("clerkId"), args.clerkId))
       .unique();
 
-    if (!user) {
-      throw new ConvexError("User not found");
-    }
+    // if (!user) {
+    //   throw new ConvexError("User not found");
+    // }
 
-    return user;
+    return user || null;
   },
 });
 
@@ -54,13 +54,33 @@ export const createUser = internalMutation({
     email: v.string(),
     imageUrl: v.string(),
     name: v.optional(v.string()),
+    role: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
-    await ctx.db.insert("users", {
+    // Check if user already exists
+    const existing = await ctx.db
+      .query("users")
+      .filter((q) => q.eq(q.field("clerkId"), args.clerkId))
+      .unique();
+
+    if (existing) {
+      // Optionally update fields if webhook provides fresher data
+      await ctx.db.patch(existing._id, {
+        email: args.email,
+        imageUrl: args.imageUrl,
+        name: args.name ?? existing.name,
+        role: args.role ?? existing.role,
+      });
+      return existing._id;
+    }
+
+    // Otherwise insert new user
+    return await ctx.db.insert("users", {
       clerkId: args.clerkId,
       email: args.email,
       imageUrl: args.imageUrl,
       name: args.name ?? "Unnamed User",
+      role: args.role ?? "listener",
     });
   },
 });
@@ -102,6 +122,22 @@ export const updateUser = internalMutation({
         await ctx.db.patch(p._id, { authorImageUrl: args.imageUrl });
       })
     );
+  },
+});
+
+export const becomeCreator = mutation({
+  args: { clerkId: v.string() },
+  handler: async (ctx, { clerkId }) => {
+    const user = await ctx.db
+      .query("users")
+      .filter((q) => q.eq(q.field("clerkId"), clerkId))
+      .unique();
+
+    if (!user) throw new ConvexError("User not found");
+
+    if (user.role === "creator") return; // already upgraded
+
+    await ctx.db.patch(user._id, { role: "creator" });
   },
 });
 

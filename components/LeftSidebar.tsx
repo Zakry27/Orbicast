@@ -43,8 +43,7 @@ const LeftSidebar = () => {
               className={cn(
                 "flex gap-3 items-center py-3 max-lg:px-4 justify-start transition-all",
                 {
-                  "bg-nav-focus text-[#a4b26f] border-r-4 border-[#a4b26f] pl-4":
-                    isActive,
+                  "bg-nav-focus text-[#688e26] pl-4": isActive,
                   "text-white-1": !isActive,
                 }
               )}
