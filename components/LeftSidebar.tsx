@@ -2,7 +2,9 @@
 
 import { sidebarLinks } from "@/constants";
 import { cn } from "@/lib/utils";
-import { SignedIn, SignedOut, useClerk } from "@clerk/nextjs";
+import { SignedIn, SignedOut, useClerk, useUser } from "@clerk/nextjs";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -15,6 +17,28 @@ const LeftSidebar = () => {
   const router = useRouter();
   const { signOut } = useClerk();
   const { audio } = useAudio();
+
+  const { user } = useUser();
+
+  // Fetch role from Convex
+  const dbUser = useQuery(api.users.getUserById, { clerkId: user?.id || "" });
+  const role = dbUser?.role || (user ? "listener" : "guest");
+
+  // Role-based filtering
+  const filteredLinks = sidebarLinks.filter(({ label }) => {
+    if (role === "guest") {
+      return ["Home", "Discover", "Profile"].includes(label);
+    }
+    if (role === "listener") {
+      return ["Home", "Discover", "Library", "History", "Profile"].includes(
+        label
+      );
+    }
+    if (role === "creator") {
+      return true; // all links
+    }
+    return false;
+  });
 
   return (
     <section
@@ -32,7 +56,7 @@ const LeftSidebar = () => {
             Orbicast
           </h1>
         </Link>
-        {sidebarLinks.map(({ route, label, imgURL }) => {
+        {filteredLinks.map(({ route, label, imgURL }) => {
           const isActive =
             pathname === route || pathname.startsWith("${route}/");
 
