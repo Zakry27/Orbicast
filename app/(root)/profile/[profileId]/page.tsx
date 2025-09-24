@@ -24,10 +24,17 @@ const ProfilePage = ({
 
   if (!user || !podcastsData) return <LoaderSpinner />;
 
+  // Determine if user is a creator or listener
+  const isCreator = user.role === "creator"; // adjust based on your user object
+
+  const emptyStateMessage = isCreator
+    ? "You haven’t created any podcasts yet"
+    : "No podcasts yet — become a creator to start!";
+
   return (
     <section className="mt-9 flex flex-col">
       <h1 className="text-20 font-bold text-white-1 max-md:text-center">
-        Podcaster Profile
+        User Profile
       </h1>
       <div className="mt-6 flex flex-col gap-6 max-md:items-center md:flex-row">
         <ProfileCard
@@ -53,11 +60,7 @@ const ProfilePage = ({
               ))}
           </div>
         ) : (
-          <EmptyState
-            title="You have not created any podcasts yet"
-            buttonLink="/create-podcast"
-            buttonText="Start Creating"
-          />
+          <EmptyState title={emptyStateMessage} />
         )}
       </section>
     </section>

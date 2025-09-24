@@ -1,40 +1,55 @@
-export const sidebarLinks = [
-  {
-    imgURL: "/icons/home.svg",
-    route: "/",
-    label: "Home",
-  },
-  {
-    imgURL: "/icons/discover.svg",
-    route: "/discover",
-    label: "Discover",
-  },
-  {
-    imgURL: "/icons/mypodcasts.svg",
-    route: "/mypodcasts",
-    label: "My Podcasts",
-  },
-  {
-    imgURL: "/icons/library.svg",
-    route: "/library",
-    label: "Library",
-  },
-  {
-    imgURL: "/icons/history.svg",
-    route: "/history",
-    label: "History",
-  },
-  {
-    imgURL: "/icons/microphone.svg",
-    route: "/create-podcast",
-    label: "Create Podcast",
-  },
-  {
-    imgURL: "/icons/profile.svg",
-    route: "/profile",
-    label: "Profile",
-  },
-];
+export const sidebarLinks = (role: string, userId?: string) => {
+  const baseLinks = [
+    {
+      imgURL: "/icons/home.svg",
+      route: "/",
+      label: "Home",
+    },
+    {
+      imgURL: "/icons/discover.svg",
+      route: "/discover",
+      label: "Discover",
+    },
+    {
+      imgURL: "/icons/mypodcasts.svg",
+      route: `/mypodcasts/${userId}`,
+      label: "My Podcasts",
+    },
+    {
+      imgURL: "/icons/library.svg",
+      route: "/library",
+      label: "Library",
+    },
+    {
+      imgURL: "/icons/history.svg",
+      route: "/history",
+      label: "History",
+    },
+    {
+      imgURL: "/icons/microphone.svg",
+      route: "/create-podcast",
+      label: "Create Podcast",
+    },
+    {
+      imgURL: "/icons/profile.svg",
+      route: `/profile/${userId}`,
+      label: "My Profile",
+    },
+  ];
+
+  // Role-based filtering
+  if (role === "guest") {
+    return baseLinks.filter((l) =>
+      ["Home", "Discover", "Library", "My Profile"].includes(l.label)
+    );
+  }
+  if (role === "listener") {
+    return baseLinks.filter((l) =>
+      ["Home", "Discover", "Library", "History", "My Profile"].includes(l.label)
+    );
+  }
+  return baseLinks; // creator
+};
 
 export const voiceDetails = [
   {

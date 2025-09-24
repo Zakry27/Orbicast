@@ -101,11 +101,11 @@ const PodcastPlayer = () => {
     >
       {/* change the color for indicator inside the Progress component in ui folder */}
       <Progress
-        value={(currentTime / duration) * 100}
+        value={duration > 0 ? (currentTime / duration) * 100 : 0}
         className="w-full"
-        max={duration}
+        max={duration > 0 ? duration : 1}
       />
-      <section className="glassmorphism-black flex h-[112px] w-full items-center justify-between px-4 max-md:justify-center max-md:gap-5 md:px-12">
+      <section className="glassmorphism-black flex h-[80px] w-full items-center justify-between px-4 max-md:justify-center max-md:gap-5 md:px-12">
         <audio
           ref={audioRef}
           src={audio?.audioUrl}
@@ -134,8 +134,8 @@ const PodcastPlayer = () => {
           <div className="flex items-center gap-1.5">
             <Image
               src={"/icons/reverse.svg"}
-              width={24}
-              height={24}
+              width={30}
+              height={30}
               alt="rewind"
               onClick={rewind}
             />
@@ -143,8 +143,8 @@ const PodcastPlayer = () => {
           </div>
           <Image
             src={isPlaying ? "/icons/Pause.svg" : "/icons/Play.svg"}
-            width={30}
-            height={30}
+            width={50}
+            height={50}
             alt="play"
             onClick={togglePlayPause}
           />
@@ -152,8 +152,8 @@ const PodcastPlayer = () => {
             <h2 className="text-12 font-bold text-white-4">+5</h2>
             <Image
               src={"/icons/forward.svg"}
-              width={24}
-              height={24}
+              width={30}
+              height={30}
               alt="forward"
               onClick={forward}
             />

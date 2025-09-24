@@ -40,6 +40,7 @@ html {
   .flex-center {
     @apply flex items-center justify-center;
   }
+
   .text-12 {
     @apply text-[12px] leading-normal;
   }
@@ -120,13 +121,13 @@ html {
   filter: invert(1);
 }
 .cl-internal-b3fm6y {
-  background: #688e26;
+  background: #5c7457;
 }
 .cl-formButtonPrimary {
-  background: #688e26;
+  background: #5c7457;
 }
 .cl-footerActionLink {
-  color: #688e26;
+  color: #5c7457;
 }
 .cl-headerSubtitle {
   color: #c5d0e6;
@@ -143,6 +144,6 @@ html {
   color: white;
 }
 .cl-internal-wkkub3 {
-  color: #688e26;
-  /* 688e26 */
+  color: #5c7457;
+  /* 5c7457 */
 }

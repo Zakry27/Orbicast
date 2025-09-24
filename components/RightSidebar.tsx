@@ -31,6 +31,7 @@ import { Rocket, OctagonAlert } from "lucide-react";
 const RightSidebar = () => {
   const { user } = useUser();
   const [success, setSuccess] = useState(false);
+  const displayName = user?.username || user?.fullName || "Anonymous";
 
   const topPodcasters = useQuery(api.users.getTopUserByPodcastCount);
   const dbUser = useQuery(api.users.getUserById, { clerkId: user?.id || "" });
@@ -68,7 +69,7 @@ const RightSidebar = () => {
   return (
     <section
       className={cn("right_sidebar h-[calc(100vh-5px)]", {
-        "h-[calc(100vh-140px)]": audio?.audioUrl,
+        "h-[calc(100vh-80px)]": audio?.audioUrl,
       })}
     >
       <SignedIn>
@@ -76,7 +77,7 @@ const RightSidebar = () => {
           <UserButton />
           <div className="flex w-full items-center justify-between">
             <h1 className="text-16 truncate font-semibold text-white-1">
-              {user?.firstName} {user?.lastName}
+              {displayName}
             </h1>
             <Image
               src="/icons/right-arrow.svg"
@@ -92,7 +93,7 @@ const RightSidebar = () => {
         <Carousel fansLikeDetail={topPodcasters!} />
       </section>
       <section className="flex flex-col gap-8 pt-12">
-        <Header headerTitle="Top podcasters" />
+        <Header headerTitle="Top users" />
         <div className="flex flex-col gap-6">
           {topPodcasters?.slice(0, 4).map((podcaster) => (
             <div

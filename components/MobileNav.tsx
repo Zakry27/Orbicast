@@ -7,6 +7,9 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { SignedIn, SignedOut, useClerk, useUser } from "@clerk/nextjs";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 import Image from "next/image";
 import Link from "next/link";
 import { sidebarLinks } from "@/constants";
@@ -15,6 +18,12 @@ import { cn } from "@/lib/utils";
 
 const MobileNav = () => {
   const pathname = usePathname();
+  const { user } = useUser();
+
+  // Fetch role from Convex
+  const dbUser = useQuery(api.users.getUserById, { clerkId: user?.id || "" });
+  const role = dbUser?.role || (user ? "listener" : "guest");
+  const filteredLinks = sidebarLinks(role, user?.id);
 
   return (
     <section>
@@ -41,7 +50,7 @@ const MobileNav = () => {
           <div className="flex h-[calc(100vh-72px)] flex-col justify-between overflow-y-auto">
             <SheetClose asChild>
               <nav className="flex h-full flex-col gap-6 text-white-1">
-                {sidebarLinks.map(({ route, label, imgURL }) => {
+                {filteredLinks.map(({ route, label, imgURL }) => {
                   const isActive =
                     pathname === route || pathname.startsWith("${route}/");
 

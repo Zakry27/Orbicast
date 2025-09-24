@@ -23,27 +23,12 @@ const LeftSidebar = () => {
   // Fetch role from Convex
   const dbUser = useQuery(api.users.getUserById, { clerkId: user?.id || "" });
   const role = dbUser?.role || (user ? "listener" : "guest");
-
-  // Role-based filtering
-  const filteredLinks = sidebarLinks.filter(({ label }) => {
-    if (role === "guest") {
-      return ["Home", "Discover", "Profile"].includes(label);
-    }
-    if (role === "listener") {
-      return ["Home", "Discover", "Library", "History", "Profile"].includes(
-        label
-      );
-    }
-    if (role === "creator") {
-      return true; // all links
-    }
-    return false;
-  });
+  const filteredLinks = sidebarLinks(role, user?.id);
 
   return (
     <section
       className={cn("left_sidebar h-[calc(100vh-5px)]", {
-        "h-[calc(100vh-140px)]": audio?.audioUrl,
+        "h-[calc(100vh-80px)]": audio?.audioUrl,
       })}
     >
       <nav className="flex flex-col gap-6">
@@ -67,7 +52,7 @@ const LeftSidebar = () => {
               className={cn(
                 "flex gap-3 items-center py-3 max-lg:px-4 justify-start transition-all",
                 {
-                  "bg-nav-focus text-[#688e26] pl-4": isActive,
+                  "bg-nav-focus text-[#5c7457] pl-4": isActive,
                   "text-white-1": !isActive,
                 }
               )}
